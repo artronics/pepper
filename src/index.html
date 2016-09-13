@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>elm-webpack-loader example</title>
+</head>
+<body>
+<div id="main">
+  kir
+</div>
+<!--<script src="index.js"></script>-->
+</body>
+<script>
+  (function () {
+    var script = document.createElement('script');
+    script.src = process.env.ENV === 'development' ? 'http://localhost:9000/dist/bundle.js' : './dist/bundle.js';
+    var html = script.outerHTML;
+    document.write(html);
+  }());
+</script>
+</html>
