@@ -1,6 +1,9 @@
-import Html exposing (Html,div, button, text)
+import Html exposing (..)
 import Html.App exposing (program)
+import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
+
+import Component.Toolbox exposing (..)
 
 main : Program (Never)
 main =
@@ -21,12 +24,18 @@ subscriptions = \_ -> Sub.none
 
 view: Model -> Html Msg
 view model =
-  div []
-    [ button [ onClick Decrement ] [ text "-" ]
-    , div [] [ text (toString model) ]
-    , button [ onClick Increment ] [ text "+" ]
+  div [class "art-layout"]
+    [ div [class "art-main-row"]
+        [ div [id "art-toolbox"]
+            [toolbox]
+        , div [id "art-schematics"]
+            [text "schematics"]
+        , div [id "art-explorer"]
+            [text "explorer"]
     ]
-
+    , div [id "art-status"]
+        [text "status"]
+  ]
 
 type Msg = Increment | Decrement
 

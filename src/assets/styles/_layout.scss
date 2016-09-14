@@ -1,0 +1,31 @@
+@import "flex";
+
+.art-layout {
+  height: 100%;
+  width: 100%;
+  @extend %flexbox;
+  @include flex-dir(column)
+}
+
+.art-main-row {
+  flex: 1;
+  @extend %flexbox;
+}
+
+#art-toolbox {
+  background-color: lightblue;
+}
+
+#art-schematics {
+  background-color: tomato;
+  flex: 1;
+}
+
+#art-explorer {
+  background-color: #2f65ca;
+}
+
+#art-status {
+  background-color: grey;
+  min-height: 1.5em;
+}

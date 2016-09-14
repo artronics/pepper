@@ -1,1 +1,21 @@
-$color-background: tomato
+$color-text: #d8d8d8;
+$color-text-disabled: #777777;
+
+$color-pane: #3c3f41;
+$color-hover: #2f65ca;
+
+$color-button-disabled: $color-pane;
+$color-button-default-top: #515658;
+$color-button-default-bot: #44494b;
+$color-button-primary-top: #344a64;
+$color-button-primary-bot: #26364a;
+
+$border-button-radius: 5px;
+$border-button-width: 2px;
+$border-button-color: #575859;
+$border-button-color-focused: #4c6f93;
+
+$color-menu: #383b3d;
+$color-menu-text: white;
+$color-menu-item-active: $color-hover;
+$color-menu-item-text-disabled: $color-text-disabled;
