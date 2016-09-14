@@ -10,6 +10,13 @@ import Element exposing (..)
 import Text
 import Time exposing (..)
 
+import Model exposing (..)
+import Message exposing (..)
+
+import Component.Toolbox exposing (viewToolbox)
+import Component.Schematic exposing (viewSchematic)
+
+
 main : Program (Never)
 main =
   program
@@ -20,11 +27,11 @@ main =
     }
 
 
-type alias Model =
-    { schematic : Maybe Form}
+model:Model
+model = model
 
-
-init = ({schematic=Nothing}, Cmd.none)
+init:(Model,Cmd a)
+init = (initModel,Cmd.none)
 
 subscriptions: Model -> Sub Msg
 subscriptions = \_ -> Sub.none
@@ -34,9 +41,9 @@ view model =
   div [class "art-layout"]
     [ div [class "art-main-row"]
         [ div [id "art-toolbox"]
-            [viewToolbox]
+            [viewToolbox model.toolbox]
         , div [id "art-schematics"]
-            [viewSchematic model]
+            [viewSchematic model.schematic]
         , div [id "art-explorer"]
             [Html.text "explorer"]
     ]
@@ -44,45 +51,20 @@ view model =
         [Html.text "status"]
   ]
 
-type Msg
-    = Schematic
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    (update' msg model ,Cmd.none)
+   (update' msg model, Cmd.none)
 
 update' : Msg -> Model -> Model
 update' msg model =
   case msg of
-    Schematic ->
-        {model | schematic = Just drawResistor }
+    NoOp -> model
+    Placing Nothing  -> model
+    Placing (Just form) ->
+        let
+            schematic = model.schematic
+        in
+            {model | schematic = {schematic | placing = Just form}}
 
-
-viewToolbox = div[class "art-toolbox"]
-    [ i[class "art-resistor",onClick Schematic][]
-    ]
-
-
-
-schematicModel =
-    { conSize=(400,600)
-    , schSize=(390,590)
-    }
-
-viewSchematic model=
-    let
-        (conW, conH) = schematicModel.conSize
-        (schW, schH) = schematicModel.schSize
-    in
-        toHtml <|
-            container conW conH middle <|
-            collage schW schH
-                ([ rect schW schH |> filled (rgb 0 0 0 )]++ (drawElement model.schematic))
-
-drawElement elm =
-    case elm of
-        Nothing ->[]
-        Just _ -> [drawResistor]
-
-drawResistor = circle 20 |> filled (rgb 100 100 100)
