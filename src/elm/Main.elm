@@ -61,10 +61,10 @@ update' : Msg -> Model -> Model
 update' msg model =
   case msg of
     NoOp -> model
-    Placing Nothing  -> model
-    Placing (Just form) ->
+    Placing Nothing  toolboxIndex-> {model | toolbox = toolboxIndex}
+    Placing (Just form) toolboxIndex->
         let
             schematic = model.schematic
         in
-            {model | schematic = {schematic | placing = Just form}}
+            {model | schematic = {schematic | placing = Just form},toolbox = toolboxIndex}
 

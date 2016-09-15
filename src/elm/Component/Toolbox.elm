@@ -14,6 +14,19 @@ init:Model
 init = 0
 
 viewToolbox: Model -> Html Msg
-viewToolbox model = div[class "art-toolbox"]
-    [ i[class "art-resistor", onClick <|Placing (Just Cir.resistor)][text (toString model)]
+viewToolbox model = ul[class "art-toolbox"] (createIcons model)
+
+handleOnClick = 0
+
+createIcons activeIndex =
+    List.indexedMap (\index icon->
+            let
+                (key,css,form) = icon
+            in
+                li[][i[classList [(css,True),("active",activeIndex == index)], onClick <| Placing form index][]]
+        ) icons
+
+icons =
+    [ ("selection","art-selection",Nothing)
+    , ("resistor","art-resistor", Just Cir.resistor)
     ]
