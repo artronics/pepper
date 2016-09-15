@@ -2,4 +2,7 @@
 
 .art-toolbox {
   width: 2em;
+  .active {
+    border: 2px solid black;
+  }
 }
