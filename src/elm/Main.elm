@@ -34,23 +34,9 @@ init:(Model,Cmd a)
 init = (initModel,Cmd.none)
 
 subscriptions: Model -> Sub Msg
-subscriptions = \_ -> Sub.none
-
-view: Model -> Html Msg
-view model =
-  div [class "art-layout"]
-    [ div [class "art-main-row"]
-        [ div [id "art-toolbox"]
-            [viewToolbox model.toolbox]
-        , div [id "art-schematics"]
-            [viewSchematic model.schematic]
-        , div [id "art-explorer"]
-            [Html.text "explorer"]
-    ]
-    , div [id "art-status"]
-        [Html.text "status"]
-  ]
-
+subscriptions model =
+    case model of
+        _ -> Sub.none
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -67,4 +53,20 @@ update' msg model =
             schematic = model.schematic
         in
             {model | schematic = {schematic | placing = Just form},toolbox = toolboxIndex}
+
+
+view: Model -> Html Msg
+view model =
+  div [class "art-layout"]
+    [ div [class "art-main-row"]
+        [ div [id "art-toolbox"]
+            [viewToolbox model.toolbox]
+        , div [id "art-schematics"]
+            [viewSchematic model.schematic]
+        , div [id "art-explorer"]
+            [Html.text "explorer"]
+    ]
+    , div [id "art-status"]
+        [Html.text "status"]
+  ]
 

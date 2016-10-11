@@ -11,19 +11,18 @@ import Element exposing (..)
 import Text
 import Time exposing (..)
 
+import Utils exposing (..)
 import Message exposing (..)
 
 type alias Model=
-    { conSize:(Int,Int)
-    , schSize:(Int,Int)
+    { canvasSize:(Int,Int)
     , placing: Maybe Form
     }
 
 
 init: Model
 init =
-    { conSize = (600,400)
-    , schSize = (590,390)
+    { canvasSize = (842,595)
     , placing = Nothing
     }
 
@@ -36,22 +35,17 @@ viewSchematic model=
 createCanvas: Model -> Html Msg
 createCanvas model=
     let
-        (conW, conH) = model.conSize
-        (schW, schH) = model.schSize
+        (canvasW, canvasH) = model.canvasSize
     in
         toHtml <|
-            container conW conH middle <|
-            collage schW schH
-                ([schematicRect (schW-10) (schH-10)] ++ (drawPlacingElm model.placing))
+            container (canvasW+50) (canvasH+50) middle <|
+            collage canvasW canvasH
+                ([schematicRect canvasW canvasH] ++ (drawPlacingElm model.placing))
 --                ([schematicRect schW schH])
 
 
 schematicRect w h =
-    let
-        w' = toFloat w
-        h' = toFloat h
-    in
-        rect w' h' |> filled (rgb 0 0 0)
+     rect|> toFloat2 w h |> filled (rgb 0 0 0)
 
 drawPlacingElm: Maybe Form -> List Form
 drawPlacingElm elm=
@@ -59,5 +53,8 @@ drawPlacingElm elm=
         Nothing -> []
         Just form -> [form]
 
-drawResistor =
-        circle 20 |> filled (rgb 100 100 100)
+--Things related to canvas size and paper size
+type Paper
+    =A4
+type Dpi
+    = Low
